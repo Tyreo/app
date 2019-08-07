@@ -66,3 +66,29 @@ This section has moved here: https://facebook.github.io/create-react-app/docs/de
 ### `npm run build` fails to minify
 
 This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+
+
+/***********************************************
+babel-plugin-import按需加载antd-mobile样式
+"plugins": [
+      [
+        "import",
+        {
+          "libraryName": "antd-mobile",
+          "style": "css"
+        }
+      ]
+    ]
+@babel/plugin-proposal-decorators 装饰器插件redux，connect
+"plugins": [
+              [
+                "@babel/plugin-proposal-decorators",
+                {
+                  "legacy": true
+                }
+              ]
+            ]
+            
+"proxy": "http://localhost:9093"转发端口，解决前后端跨域
+cookie-parser处理cookie
+redux，redux-router-dom，redux-thunk
