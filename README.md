@@ -91,4 +91,9 @@ babel-plugin-import按需加载antd-mobile样式
             
 "proxy": "http://localhost:9093"转发端口，解决前后端跨域
 cookie-parser处理cookie
-redux，redux-router-dom，redux-thunk
+redux，redux-router-dom，redux-thunk,react-redux
+antd-mobile,axios,babel-plugin-import,mongoose,express
+cookie-parser,
+body-parser express中间件，用来接收解析请求参数
+utility MD5加密插件,util.MD5(pwd)
+prop-types类型检查
