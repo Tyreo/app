@@ -5,6 +5,8 @@ const AUTH_SUCCESS = 'AUTH_SUCCESS'
 const ERR_MSG = 'ERR_MSG'
 // const LOGIN_SUCCESS = 'LOGIN_SUCCESS'
 const LOAD_DATA = 'LOAD_DATA'
+// const LOAD_FAIL = 'LOAD_FAIL'
+const LOGOUT = 'LOGOUT'
 const initState = {
     redirecTo:'',
     user:'',
@@ -27,11 +29,10 @@ export function user(state=initState,action) {
                 ...state,msg: '',...action.payload,
                 redirecTo:getRedirectPath(action.payload.type,action.payload.avatar)
             })
-       /* case LOGIN_SUCCESS:
+        case LOGOUT:
             return ({
-                ...state,msg: '',isAuth: true,...action.payload,login_register:'login',
-                redirecTo:getRedirectPath(action.payload.type,action.payload.avatar)
-            })*/
+                ...initState,redirecTo: '/login'
+            })
         default:
             return state
     }
@@ -43,12 +44,13 @@ function errMsg(msg) {
         type:ERR_MSG,
     }
 }
-
 function authSuccess(obj) {
     const {pwd,...data} =obj
     return {type: AUTH_SUCCESS,payload:data}
 }
-
+export function logoutSubmit() {
+    return {type: LOGOUT}
+}
 export function update(data) {
     return dispatch=> {
         axios.post('/user/update', data)
@@ -112,3 +114,34 @@ export function register({user,pwd,repeatpwd,type}) {
 /*function loginSuccess(data) {
     return {type:LOGIN_SUCCESS,payload:data}
 }*/
+/* return dispatch=>{
+        axios.get('/user/info')
+            .then(res=>{
+                if (res.status===200){
+                    // console.log(res.data)
+                    if (res.data.code===0){
+                        // console.log(res.data.code)
+                        dispatch(load(res.data.data))
+                    }/!*else {
+                        dispatch(loadFail())
+                        // console.log(typeof (res.data.code))
+                    }*!/
+
+                }
+            })
+    }*/
+/*function load(userinfodata) {
+    return{type: LOAD_DATA,payload:userinfodata}
+}
+function loadFail() {
+    return {type:LOAD_FAIL }
+}*/
+/* case LOGIN_SUCCESS:
+          return ({
+              ...state,msg: '',isAuth: true,...action.payload,login_register:'login',
+              redirecTo:getRedirectPath(action.payload.type,action.payload.avatar)
+          })*/
+/*case LOAD_FAIL:
+    return ({
+        ...state,isAuth:false
+    })*/

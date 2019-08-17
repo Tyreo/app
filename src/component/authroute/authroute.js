@@ -1,8 +1,9 @@
-import React, {Component} from 'react';
+import  {Component} from 'react';
 import {withRouter} from 'react-router-dom'
 import axios from 'axios'
 import {connect} from 'react-redux'
 import {loadData} from "../../redux/user.redux";
+// import {Redirect} from 'react-router-dom'
 
 @withRouter
 @connect(
@@ -12,12 +13,12 @@ import {loadData} from "../../redux/user.redux";
 class Authroute extends Component {
 
     componentDidMount() {
+
         const publicList = ['/login','/register']
         const pathname = this.props.location.pathname
         if (publicList.indexOf(pathname)>-1){
             return null
         }
-        // console.log(this.props)
         axios.get('/user/info')
             .then(res=>{
                 if (res.status===200){
@@ -26,14 +27,14 @@ class Authroute extends Component {
                         // console.log(res.data.code)
                         this.props.loadData(res.data.data)
                     }else {
-                        // this.props.history.push('/login')
+                        this.props.history.push('/login')
                         // console.log(typeof (res.data.code))
                     }
 
                 }
             })
-    }
 
+    }
     render() {
         return null
     }

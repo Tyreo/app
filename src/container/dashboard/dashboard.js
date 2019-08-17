@@ -1,29 +1,31 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux'
 import {Switch,Route} from "react-router-dom";
-import {NavBar, Button, InputItem, TextareaItem, WhiteSpace, WingBlank} from 'antd-mobile';
+import {NavBar} from 'antd-mobile';
 import Navlink from "../../component/navlink/navlink";
-function Interviewer() {
-    return <h2>招聘者首页</h2>
-}
-function Applicant() {
-    return <h2>应聘者首页</h2>
-}
-function Msg() {
-    return <h2>消息列表</h2>
-}
-function User() {
-    return <h2>个人中心</h2>
-}
+import Interviewer from "../../component/interviewer/interviewer";
+import Applicant from "../../component/applicant/applicant";
+import User from "../../component/user/user";
+import {getMsgList,recvMsg} from "../../redux/chat.redux";
+import Msg from "../../component/msg/msg";
 @connect(
-    state=>state.user
+    state=>state,
+    {getMsgList,recvMsg}
 )
 class Dashboard extends Component {
+
+    componentDidMount() {
+        if (!this.props.chat.chatmsg.length){
+            this.props.getMsgList()
+            this.props.recvMsg()
+        }
+    }
+
     render() {
         // console.log(this.props)
         const {pathname} = this.props.location
         // console.log(pathname)
-        const user = this.props
+        const user = this.props.user
         const navList = [
             {
                 path:'/interviewer',
@@ -46,21 +48,24 @@ class Dashboard extends Component {
                 text:'消息',
                 icon:'msg',
                 title:'消息列表',
-                component:Msg,
+                component:Msg
             },
             {
                 path:'/me',
                 text:'我的',
                 icon:'user',
                 title:'个人中心',
-                component:User,
+                component:User
             }
 
         ]
+        // console.log(navList) (pathname==='/applicant'||pathname==='/interviewer'||pathname==='/msg'||pathname==='/me')?
         return (
             <div >
-                <NavBar className='fixed-header' mode='dark'>{navList.find(v=>v.path===pathname).title}</NavBar>,
-                <div style={{marginTop:45}}>
+                <NavBar className='fixed-header' mode='dark'>
+                    {navList.find(v=>v.path===pathname).title}
+                </NavBar>
+                <div style={{marginTop:45,marginBottom:75}}>
                     <Switch>
                         {navList.map(v=>(
                             <Route key={v.path} path={v.path} component={v.component}/>
